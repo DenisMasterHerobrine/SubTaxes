@@ -1,0 +1,5 @@
+name: BlankPlugin
+version: 1.0
+author: DenisMasterHerobrine
+main: dev.denismasterherobrine.blankplugin.BlankPlugin
+api-version: 1.16
