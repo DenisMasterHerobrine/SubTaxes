@@ -11,7 +11,7 @@ public class SubTaxes extends JavaPlugin {
 
     @Override
     public void onEnable(){
-        // Fired when the server enables the plugin
+        // Fired when the server enables the plugin.
         config.addDefault("SQLUsername"," ");
         config.addDefault("SQLPassword"," ");
         config.addDefault("SQLDatabaseName"," ");
@@ -24,13 +24,13 @@ public class SubTaxes extends JavaPlugin {
         host = config.getString("SQLHost");
         port = config.getInt("SQLPort");
         database = config.getString("SQLDatabaseName");
-        username = config.getString("SQLUsername");;
-        password = config.getString("SQLPassword");;
+        username = config.getString("SQLUsername");
+        password = config.getString("SQLPassword");
 
     }
 
     @Override
     public void onDisable(){
-        // Fired when the server stops and disables all plugins
+        // Fired when the server stops and disables all plugins.
     }
 }
