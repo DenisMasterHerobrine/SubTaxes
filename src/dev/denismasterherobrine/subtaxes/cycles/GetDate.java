@@ -4,9 +4,9 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class GetDate {
-    Date date = Calendar.getInstance().getTime();
+    private static Date date = Calendar.getInstance().getTime();
 
-    public Date getDate() {
+    public static Date getDate() {
         return date; // Thu Mar 26 08:22:02 IST 2015 format
     }
 }
