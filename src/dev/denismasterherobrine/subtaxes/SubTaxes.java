@@ -32,6 +32,6 @@ public class SubTaxes extends JavaPlugin {
     @Override
     public void onDisable(){
         // Fired when the server stops and disables all plugins.
-        // Now this should work now.
+        // Now this should work now
     }
 }
