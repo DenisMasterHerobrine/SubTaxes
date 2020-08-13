@@ -3,20 +3,26 @@ package dev.denismasterherobrine.subtaxes;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.Date;
+
 public class SubTaxes extends JavaPlugin {
 
     FileConfiguration config = getConfig();
     public String host, database, username, password;
     public int port;
 
+    Date StartDate = new Date();
+
     @Override
     public void onEnable(){
-        // Fired when the server enables the plugin.
+        // Fired when the server enables the plugin
         config.addDefault("SQLUsername"," ");
         config.addDefault("SQLPassword"," ");
         config.addDefault("SQLDatabaseName"," ");
         config.addDefault("SQLHost"," ");
         config.addDefault("SQLPort", 3306);
+
+        config.addDefault("StartTime", StartDate);
 
         config.options().copyDefaults(true);
         saveConfig();
@@ -30,6 +36,6 @@ public class SubTaxes extends JavaPlugin {
 
     @Override
     public void onDisable(){
-        // Fired when the server stops and disables all plugins.
+        // Fired when the server stops and disables all plugins
     }
 }
