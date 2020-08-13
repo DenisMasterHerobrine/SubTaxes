@@ -26,12 +26,10 @@ public class SubTaxes extends JavaPlugin {
         database = config.getString("SQLDatabaseName");
         username = config.getString("SQLUsername");
         password = config.getString("SQLPassword");
-
     }
 
     @Override
     public void onDisable(){
         // Fired when the server stops and disables all plugins.
-        // Now this should work now
     }
 }
