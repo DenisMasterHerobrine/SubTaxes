@@ -4,6 +4,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 
 public class FirstTimePlayerDateCheck {
@@ -14,8 +15,10 @@ public class FirstTimePlayerDateCheck {
             SimpleDateFormat formatter = new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss z");
             String PlayerJoinDateString = formatter.format(PlayerJoinDate);
             String[] PlayerJoinDateArrayListed = PlayerJoinDateString.split("\\s+");
+            System.out.println(PlayerJoinDate);
+            System.out.println(PlayerJoinDateString);
+            System.out.println(Arrays.toString(PlayerJoinDateArrayListed));
             // Check for a day
-
             if (PlayerJoinDateArrayListed[0].equals("Mon")){
                 boolean NO_TAXES = false;
             }
@@ -37,6 +40,6 @@ public class FirstTimePlayerDateCheck {
             if (PlayerJoinDateArrayListed[0].equals("Sun")){
                 boolean NO_TAXES = true;
             }
-        };
+        }
     }
 }
