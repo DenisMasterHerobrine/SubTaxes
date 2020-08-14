@@ -7,12 +7,12 @@ public class HeartManager {
     public void removeHearts(Player player){
         int PlayerHP = SubTaxes.getPlugin(SubTaxes.class).getPlayerHPInt();
         int PlayerHPRemove = SubTaxes.getPlugin(SubTaxes.class).getPlayerHPRemove();
-        player.setHealth(PlayerHP - PlayerHPRemove);
+        player.setMaxHealth(PlayerHP - PlayerHPRemove);
     }
     public void addHearts(Player player){
         int PlayerHP = SubTaxes.getPlugin(SubTaxes.class).getPlayerHPInt();
         int PlayerHPAdd = SubTaxes.getPlugin(SubTaxes.class).getPlayerHPAdd();
-        player.setHealth(PlayerHP + PlayerHPAdd);
+        player.setMaxHealth(PlayerHP + PlayerHPAdd);
     }
 }
 
