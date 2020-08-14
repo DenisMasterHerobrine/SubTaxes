@@ -1,10 +1,10 @@
 name: SubTaxes
 version: 0.1-SNAPSHOT
-author: DenisMasterHerobrine
+author: DenisMasterHerobrine, Rikonardo
 main: dev.denismasterherobrine.subtaxes.SubTaxes
 api-version: 1.16
 
 commands:
   adm:
-  farms:
+  farms: // add remove and transfer
   tax:
