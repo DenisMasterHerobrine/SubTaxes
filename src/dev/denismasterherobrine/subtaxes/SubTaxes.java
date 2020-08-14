@@ -10,7 +10,7 @@ public class SubTaxes extends JavaPlugin {
     FileConfiguration config = getConfig();
     public String host_server, database_server, username_server, password_server;
     public int port_server;
-    public int PlayerHPInt, PlayerHPAdd, PlayerHPRemove;
+    public int PlayerHPInt = 20, PlayerHPAdd, PlayerHPRemove;
 
     Date StartDate = new Date();
 
