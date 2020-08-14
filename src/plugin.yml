@@ -3,3 +3,8 @@ version: 0.1-SNAPSHOT
 author: DenisMasterHerobrine
 main: dev.denismasterherobrine.subtaxes.SubTaxes
 api-version: 1.16
+
+commands:
+  adm:
+  farms:
+  tax:
