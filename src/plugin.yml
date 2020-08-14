@@ -1,5 +1,5 @@
-name: BlankPlugin
-version: 1.0
+name: SubTaxes
+version: 0.1-SNAPSHOT
 author: DenisMasterHerobrine
-main: dev.denismasterherobrine.blankplugin.BlankPlugin
+main: dev.denismasterherobrine.subtaxes.SubTaxes
 api-version: 1.16
