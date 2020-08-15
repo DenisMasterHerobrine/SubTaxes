@@ -1,13 +1,22 @@
 package dev.denismasterherobrine.subtaxes;
 
 import dev.denismasterherobrine.subtaxes.commands.farms.FarmsAddCommand;
+import dev.denismasterherobrine.subtaxes.commands.CustomCommandManager;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.event.player.PlayerCommandSendEvent;
+import org.bukkit.event.server.TabCompleteEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.sql.Connection;
 import java.util.Date;
+import java.util.List;
 
-public class SubTaxes extends JavaPlugin {
+public class SubTaxes extends JavaPlugin implements Listener {
     private Connection connection;
     FileConfiguration config = getConfig();
     public String host_server, database_server, username_server, password_server;
@@ -45,6 +54,8 @@ public class SubTaxes extends JavaPlugin {
         database_server = config.getString("SQLDatabaseName");
         username_server = config.getString("SQLUsername");
         password_server = config.getString("SQLPassword");
+
+        getServer().getPluginManager().registerEvents((Listener)this, this);
     }
 
     @Override
@@ -64,5 +75,30 @@ public class SubTaxes extends JavaPlugin {
 
     public int getPlayerHPRemove() {
         return PlayerHPRemove;
+    }
+
+    @Override
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        return CustomCommandManager.onCommand(sender, command, label, args);
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+        return CustomCommandManager.onTabComplete(sender, command, alias, args);
+    }
+
+    @EventHandler
+    public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
+        CustomCommandManager.onPlayerCommandPreprocess(event);
+    }
+
+    @EventHandler
+    public void onPlayerCommandSend(PlayerCommandSendEvent event) {
+        CustomCommandManager.onPlayerCommandSend(event);
+    }
+
+    @EventHandler
+    public void onTabComplete(TabCompleteEvent event) {
+        CustomCommandManager.onTabComplete(event);
     }
 }
