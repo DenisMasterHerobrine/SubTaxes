@@ -21,17 +21,10 @@ public class FarmsAddCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
-        if (commandSender instanceof Player){
-            if (s.equalsIgnoreCase("farms")){
-                if (strings.length == 0){
-                    commandSender.sendMessage("Command usage: /farms <add/transfer/remove> <name of the farm> <transfer: player nickname to transfer the farm>");
-                    return false;
-                }
-            }
-            if (s.equalsIgnoreCase("farms")){
+            if (command.getName().equalsIgnoreCase("farms")){
                 if (strings.length == 1){
                     if (strings[0].equals("add")){
-                        Player player = ((Player) commandSender).getPlayer();
+                        Player player = (Player) commandSender;
                         if (player != null) {
                         World world = player.getWorld();
                         Location loc = player.getLocation();
@@ -39,13 +32,15 @@ public class FarmsAddCommand implements CommandExecutor {
                         double y = loc.getY();
                         double z = loc.getZ();
                         UUID PlayerUUID = player.getUniqueId();
+                        player.sendMessage("Ваша ферма успешно добавлена в список на рассмотрение!");
+                        System.out.println("Player Info: " + world + " " + x + " " + y + " " + z + ".");
                         BukkitRunnable r = new BukkitRunnable() {
                             @Override
                             public void run() {
                                 try {
                                     openConnection();
                                     Statement statement = connection.createStatement();
-                                    String SQLString = "INSERT INTO FarmsTableTest (PlayerUUID, world, x, y, z, name) VALUES (" + PlayerUUID + ", " + world + ", " + x + ", " + y + ", " + z + ", " + null + ");";
+                                    String SQLString = "INSERT INTO FarmsTableTest (PlayerUUID, world, x, y, z, name) VALUES ('" + PlayerUUID + "', '" + world + "', " + x + ", " + y + ", " + z + ", '<no name is provided>');";
                                     statement.executeUpdate(SQLString);
                                     connection.close();
                                 } catch (ClassNotFoundException e) {
@@ -56,12 +51,13 @@ public class FarmsAddCommand implements CommandExecutor {
                             }
                         };
                         r.runTaskAsynchronously(JavaPlugin.getPlugin(SubTaxes.class));
+                        return true;
                     }
                 }
                 }
             }
 
-            if (s.equalsIgnoreCase("farms")){
+            if (command.getName().equalsIgnoreCase("farms")){
                 if (strings.length == 2){
                     if (strings[0].equals("add")){
                         if (!strings[1].equals(null)){
@@ -73,13 +69,14 @@ public class FarmsAddCommand implements CommandExecutor {
                                 double y = loc.getY();
                                 double z = loc.getZ();
                                 UUID PlayerUUID = player.getUniqueId();
+                                player.sendMessage("Ваша ферма " + strings[1] + " успешно добавлена в список на рассмотрение!");
                                 BukkitRunnable r = new BukkitRunnable() {
                                     @Override
                                     public void run() {
                                         try {
                                             openConnection();
                                             Statement statement = connection.createStatement();
-                                            String SQLString = "INSERT INTO FarmsTableTest (PlayerUUID, world, x, y, z, name) VALUES (" + PlayerUUID + ", " + world + ", " + x + ", " + y + ", " + z + ", " + strings[1] + ");";
+                                            String SQLString = "INSERT INTO FarmsTableTest (PlayerUUID, world, x, y, z, name) VALUES ('" + PlayerUUID + "', '" + world + "', " + x + ", " + y + ", " + z + ", '" + strings[1] + "');";
                                             statement.executeUpdate(SQLString);
                                             connection.close();
                                         } catch (ClassNotFoundException e) {
@@ -90,12 +87,12 @@ public class FarmsAddCommand implements CommandExecutor {
                                     }
                                 };
                                 r.runTaskAsynchronously(JavaPlugin.getPlugin(SubTaxes.class));
+                                return true;
                             }
                         }
                     }
                 }
             };
-        }
         return true;
     };
 
@@ -131,5 +128,5 @@ public class FarmsAddCommand implements CommandExecutor {
     }
 }
 
-//statement.executeUpdate("Update FarmsTableTest Set PlayerUUID = @PlayerUUID, world = @world, x = @x, y = @y, z = @z");
+//statement.executeUpdate("UPDATE FarmsTableTest SET PlayerUUID = @PlayerUUID, world = @world, x = @x, y = @y, z = @z");
 //
