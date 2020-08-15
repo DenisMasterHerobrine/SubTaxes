@@ -133,6 +133,3 @@ public class FarmsAddCommand implements CommandExecutor {
         }
     }
 }
-
-//statement.executeUpdate("UPDATE FarmsTableTest SET PlayerUUID = @PlayerUUID, world = @world, x = @x, y = @y, z = @z");
-//
