@@ -17,7 +17,6 @@ import java.util.Date;
 import java.util.List;
 
 public class SubTaxes extends JavaPlugin implements Listener {
-    private Connection connection;
     FileConfiguration config = getConfig();
     public String host_server, database_server, username_server, password_server;
     public int port_server;
