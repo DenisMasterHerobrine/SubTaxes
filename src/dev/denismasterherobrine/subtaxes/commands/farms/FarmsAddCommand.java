@@ -46,7 +46,7 @@ public class FarmsAddCommand implements CommandExecutor {
                                 try {
                                     openConnection();
                                     Statement statement = connection.createStatement();
-                                    String SQLString = "INSERT INTO FarmsTableTest (PlayerUUID, world, x, y, z, name) VALUES ('" + PlayerUUID + "', '" + world + "', " + x + ", " + y + ", " + z + ", '<no name is provided>');";
+                                    String SQLString = "INSERT INTO FarmsTableTest (type, PlayerUUID, world, x, y, z, name) VALUES (0, '" + PlayerUUID + "', '" + world + "', " + x + ", " + y + ", " + z + ", '<no name is provided>');";
                                     statement.executeUpdate(SQLString);
                                     connection.close();
                                 } catch (ClassNotFoundException e) {
@@ -82,7 +82,7 @@ public class FarmsAddCommand implements CommandExecutor {
                                         try {
                                             openConnection();
                                             Statement statement = connection.createStatement();
-                                            String SQLString = "INSERT INTO FarmsTableTest (PlayerUUID, world, x, y, z, name) VALUES ('" + PlayerUUID + "', '" + world + "', " + x + ", " + y + ", " + z + ", '" + strings[1] + "');";
+                                            String SQLString = "INSERT INTO FarmsTableTest (type, PlayerUUID, world, x, y, z, name) VALUES (0, '" + PlayerUUID + "', '" + world + "', " + x + ", " + y + ", " + z + ", '" + strings[1] + "');";
                                             statement.executeUpdate(SQLString);
                                             connection.close();
                                         } catch (ClassNotFoundException e) {
@@ -98,10 +98,9 @@ public class FarmsAddCommand implements CommandExecutor {
                         }
                     }
                 }
-            };
+            }
         return false;
-    };
-
+    }
 
     public void openConnection() throws SQLException, ClassNotFoundException {
         String host = SubTaxes.getPlugin(SubTaxes.class).host_server;
@@ -120,16 +119,6 @@ public class FarmsAddCommand implements CommandExecutor {
             }
             Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database, username, password);
-        }
-    }
-
-    public void closeConnectiom() throws SQLException, ClassNotFoundException {
-        try {
-            if (connection != null && !connection.isClosed()){
-                connection.close();
-                }
-        } catch(Exception e) {
-            e.printStackTrace();
         }
     }
 }

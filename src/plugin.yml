@@ -7,6 +7,5 @@ api-version: 1.16
 commands:
   adm:
   farms:
-    description: Sub-command for farms
-    usage: /farms add [Farm_Name]
+    description: Prints list
   tax:
