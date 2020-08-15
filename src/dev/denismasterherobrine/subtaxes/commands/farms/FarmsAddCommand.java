@@ -22,6 +22,12 @@ public class FarmsAddCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
             if (command.getName().equalsIgnoreCase("farms")){
+                if (commandSender instanceof Player) {
+                        if (strings.length == 0) {
+                            commandSender.sendMessage("Command usage: /farms <add/transfer/remove> <name of the farm> <transfer: player nickname to transfer the farm>");
+                            return false;
+                        }
+                    }
                 if (strings.length == 1){
                     if (strings[0].equals("add")){
                         Player player = (Player) commandSender;
@@ -93,7 +99,7 @@ public class FarmsAddCommand implements CommandExecutor {
                     }
                 }
             };
-        return true;
+        return false;
     };
 
 
