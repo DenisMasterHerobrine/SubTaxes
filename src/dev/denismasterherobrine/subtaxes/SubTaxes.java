@@ -1,6 +1,6 @@
 package dev.denismasterherobrine.subtaxes;
 
-import dev.denismasterherobrine.subtaxes.commands.farms.FarmsAddCommand;
+import dev.denismasterherobrine.subtaxes.commands.farms.FarmsCommand;
 import dev.denismasterherobrine.subtaxes.commands.CustomCommandManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -12,9 +12,9 @@ import org.bukkit.event.player.PlayerCommandSendEvent;
 import org.bukkit.event.server.TabCompleteEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.sql.Connection;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 public class SubTaxes extends JavaPlugin implements Listener {
     FileConfiguration config = getConfig();
@@ -26,8 +26,7 @@ public class SubTaxes extends JavaPlugin implements Listener {
 
     @Override
     public void onEnable(){
-        this.getCommand("farms").setExecutor(new FarmsAddCommand());
-
+        this.getCommand("farms").setExecutor(new FarmsCommand());
         // Fired when the server enables the plugin
         config.addDefault("SQLUsername"," ");
         config.addDefault("SQLPassword"," ");
