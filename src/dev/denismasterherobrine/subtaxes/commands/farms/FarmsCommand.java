@@ -1,6 +1,7 @@
 package dev.denismasterherobrine.subtaxes.commands.farms;
 
 import dev.denismasterherobrine.subtaxes.SubTaxes;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.Command;
@@ -10,10 +11,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.List;
 import java.util.UUID;
 
 public class FarmsCommand implements CommandExecutor {
@@ -24,7 +23,9 @@ public class FarmsCommand implements CommandExecutor {
             if (command.getName().equalsIgnoreCase("farms")){
                 if (commandSender instanceof Player) {
                         if (strings.length == 0) {
-                            commandSender.sendMessage("Command usage: /farms <add/transfer/remove> <name of the farm> <transfer: player nickname to transfer the farm>");
+                            commandSender.sendMessage("Command usage: /farms add/remove <name of the farm>");
+                            commandSender.sendMessage("Command usage: /farms transfer <name of the farm> <player nickname to transfer the farm>");
+                            commandSender.sendMessage("Command usage: /farms decline to decline ALL FARMS. /farms decline <name of the farm> to decline a specific farm from transferring.");
                             return false;
                         }
                     }
@@ -32,6 +33,7 @@ public class FarmsCommand implements CommandExecutor {
                 // /farms remove
                 if (strings.length == 1){
                     if (strings[0].equals("remove")){
+                        assert commandSender instanceof Player;
                         Player player = (Player) commandSender;
                         player.sendMessage("Укажите ферму, которую хотите удалить! (Пример: /farms remove IronFarm)");
                         return true;
@@ -140,8 +142,148 @@ public class FarmsCommand implements CommandExecutor {
                 }
             }
         }
+            // /farms transfer
+        if (strings.length == 1){
+            if (strings[0].equals("transfer")){
+                assert commandSender instanceof Player;
+                Player player = (Player) commandSender;
+                player.sendMessage("Укажите ферму, которую хотите передать и ник игрока, которому передаётся она. (Пример: /farms transfer IronFarm Zakviel)");
+                return true;
+            }
+        }
+
+        // /farms transfer <name>
+        if (strings.length == 2) {
+            if (strings[0].equals("transfer")) {
+                if (strings[1] != null) {
+                    assert commandSender instanceof Player;
+                    Player player = (Player) commandSender;
+                    player.sendMessage("Укажите ник игрока, которому передаётся ферма. (Пример: /farms transfer IronFarm Zakviel)");
+                    return true;
+                }
+            }
+        }
+
+        // /farms transfer <name> <player>
+        if (strings.length == 3) {
+            if (strings[0].equals("transfer")) {
+                if (strings[1] != null) {
+                    if (strings[2] != null)
+                        if (commandSender instanceof Player) {
+                        Player sender = (Player) commandSender;
+                        Player target = Bukkit.getPlayer(strings[2]);
+                        if (target.isOnline()) {
+                            target.sendMessage("Вам пришёл запрос на перенос фермы" + strings[1] + " от " + sender + ". Пропишите /farms decline, чтобы отклонить.");
+                            sender.sendMessage("Отправлена заявка на передачу фермы!");
+                            UUID senderUUID = sender.getUniqueId();
+                            UUID targetUUID = target.getUniqueId();
+                            BukkitRunnable r = new BukkitRunnable() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        openConnection();
+                                        Statement statement = connection.createStatement();
+                                        String SQLString = "INSERT INTO TransferFarmsTableTest (senderName, receiverName, name) VALUES ('" + senderUUID + "', '" + targetUUID + "', " + strings[1] + "');";
+                                        statement.executeUpdate(SQLString);
+                                        connection.close();
+                                    } catch (ClassNotFoundException | SQLException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            };
+                            r.runTaskAsynchronously(JavaPlugin.getPlugin(SubTaxes.class));
+                            return true;
+                        }
+                        sender.sendMessage("Данный игрок оффлайн, пожалуйста, отправьте запрос, когда игрок будет онлайн.");
+                        return false;
+                }
+            }
+        }
+
+        }
+
+
+        // /farms decline
+        if (strings.length == 1) {
+            if (strings[0].equals("decline")) {
+                    assert commandSender instanceof Player;
+                    Player player = (Player) commandSender;
+                    UUID targeterUUID = player.getUniqueId();
+                    BukkitRunnable r = new BukkitRunnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                openConnection();
+                                Statement statement = connection.createStatement();
+                                ResultSet result = statement.executeQuery("SELECT * FROM TransferFarmsTableTest;");
+                                while (result.next()) {
+                                    UUID senderUUID = UUID.fromString(result.getString("senderName"));
+                                    UUID receiverUUID = UUID.fromString(result.getString("receiverName"));
+                                    String name = result.getString("name");
+                                    if (receiverUUID.equals(targeterUUID)){
+                                        Player sender = Bukkit.getPlayer(senderUUID);
+                                        sender.sendMessage("Ваши запросы были отклонены.");
+                                        commandSender.sendMessage("Вы отклонили все запросы на передачу фермы.");
+                                        Statement statement1 = connection.createStatement();
+                                        String SQLString = "DELETE FROM TransferFarmsTableTest WHERE receiverName = '" + receiverUUID + "');";
+                                        statement1.executeUpdate(SQLString);
+                                    };
+                                }
+                                connection.close();
+                            } catch (ClassNotFoundException | SQLException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    };
+                    player.sendMessage("Вам не приходило никаких запросов на передачу ферм!");
+                    return true;
+                }
+            }
+
+        // /farms decline <name>
+        if (strings.length == 2) {
+            if (strings[0].equals("decline")) {
+                if (strings[1] != null) {
+                    assert commandSender instanceof Player;
+                    Player player = (Player) commandSender;
+                    UUID targeterUUID = player.getUniqueId();
+                    BukkitRunnable r = new BukkitRunnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                openConnection();
+                                Statement statement = connection.createStatement();
+                                ResultSet result = statement.executeQuery("SELECT * FROM TransferFarmsTableTest;");
+                                while (result.next()) {
+                                    UUID senderUUID = UUID.fromString(result.getString("senderName"));
+                                    UUID receiverUUID = UUID.fromString(result.getString("receiverName"));
+                                    String name = result.getString("name");
+                                    if (receiverUUID.equals(targeterUUID) && name.equals(strings[1])){
+                                        Player sender = Bukkit.getPlayer(senderUUID);
+                                        assert sender != null;
+                                        sender.sendMessage("Ваш запрос был отклонён.");
+                                        commandSender.sendMessage("Вы отклонили запросы на передачу фермы " + name + ".");
+                                        Statement statement1 = connection.createStatement();
+                                        String SQLString = "DELETE FROM TransferFarmsTableTest WHERE receiverName = '" + receiverUUID + "', name = '" + name + "');";
+                                        statement1.executeUpdate(SQLString);
+                                    };
+                                }
+                                connection.close();
+                            } catch (ClassNotFoundException | SQLException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    };
+                    player.sendMessage("Вам не приходило никаких запросов на передачу ферм!");
+                    return true;
+                }
+            }
+        }
         return false;
     }
+
+
+
     // JDBC connector to MySQL database
     public void openConnection() throws SQLException, ClassNotFoundException {
         String host = SubTaxes.getPlugin(SubTaxes.class).host_server;
