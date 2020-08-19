@@ -13,6 +13,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.sql.*;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 public class FarmsCommand implements CommandExecutor {
@@ -171,19 +172,19 @@ public class FarmsCommand implements CommandExecutor {
                     if (strings[2] != null)
                         if (commandSender instanceof Player) {
                         Player sender = (Player) commandSender;
-                        Player target = Bukkit.getPlayer(strings[2]);
-                        if (target.isOnline()) {
-                            target.sendMessage("Вам пришёл запрос на перенос фермы" + strings[1] + " от " + sender + ". Пропишите /farms decline, чтобы отклонить.");
-                            sender.sendMessage("Отправлена заявка на передачу фермы!");
-                            UUID senderUUID = sender.getUniqueId();
-                            UUID targetUUID = target.getUniqueId();
-                            BukkitRunnable r = new BukkitRunnable() {
+                        UUID target = Objects.requireNonNull(Bukkit.getOfflinePlayer(strings[2])).getUniqueId();
+                            if (Bukkit.getOfflinePlayer(target) != null && Bukkit.getOfflinePlayer(target).isOnline()) {
+                                Player targetPlayer = Bukkit.getPlayer(target);
+                                targetPlayer.sendMessage("Вам пришёл запрос на перенос фермы" + strings[1] + " от " + sender + ". Пропишите /farms decline <name>, чтобы отклонить.");
+                                sender.sendMessage("Отправлена заявка на передачу фермы!");
+                                UUID senderUUID = sender.getUniqueId();
+                                BukkitRunnable r = new BukkitRunnable() {
                                 @Override
                                 public void run() {
                                     try {
                                         openConnection();
                                         Statement statement = connection.createStatement();
-                                        String SQLString = "INSERT INTO TransferFarmsTableTest (senderName, receiverName, name) VALUES ('" + senderUUID + "', '" + targetUUID + "', " + strings[1] + "');";
+                                        String SQLString = "INSERT INTO TransferFarmsTableTest (senderName, receiverName, name) VALUES ('" + senderUUID + "', '" + target + "', " + strings[1] + "');";
                                         statement.executeUpdate(SQLString);
                                         connection.close();
                                     } catch (ClassNotFoundException | SQLException e) {
