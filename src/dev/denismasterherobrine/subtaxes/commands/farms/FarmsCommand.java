@@ -222,11 +222,13 @@ public class FarmsCommand implements CommandExecutor {
                                     UUID receiverUUID = UUID.fromString(result.getString("receiverName"));
                                     String name = result.getString("name");
                                     if (receiverUUID.equals(targeterUUID)){
-                                        Player sender = Bukkit.getPlayer(senderUUID);
-                                        sender.sendMessage("Ваши запросы были отклонены.");
-                                        commandSender.sendMessage("Вы отклонили все запросы на передачу фермы.");
+                                        if (Bukkit.getOfflinePlayer(senderUUID) != null && Bukkit.getOfflinePlayer(senderUUID).isOnline()) {
+                                            Player sender = Bukkit.getPlayer(senderUUID);
+                                            sender.sendMessage("Ваши запрос был отклонён на ферму + " + name + ".");
+                                        }
+                                        player.sendMessage("Вы отклонили все запросы на передачу фермы.");
                                         Statement statement1 = connection.createStatement();
-                                        String SQLString = "DELETE FROM TransferFarmsTableTest WHERE receiverName = '" + receiverUUID + "');";
+                                        String SQLString = "DELETE FROM TransferFarmsTableTest WHERE receiverName='" + receiverUUID + "';";
                                         statement1.executeUpdate(SQLString);
                                     };
                                 }
@@ -261,12 +263,13 @@ public class FarmsCommand implements CommandExecutor {
                                     UUID receiverUUID = UUID.fromString(result.getString("receiverName"));
                                     String name = result.getString("name");
                                     if (receiverUUID.equals(targeterUUID) && name.equals(strings[1])){
-                                        Player sender = Bukkit.getPlayer(senderUUID);
-                                        assert sender != null;
-                                        sender.sendMessage("Ваш запрос был отклонён.");
+                                        if (Bukkit.getOfflinePlayer(senderUUID) != null && Bukkit.getOfflinePlayer(senderUUID).isOnline()) {
+                                            Player sender = Bukkit.getPlayer(senderUUID);
+                                            sender.sendMessage("Ваши запрос был отклонён на ферму + " + name + ".");
+                                        }
                                         player.sendMessage("Вы отклонили запросы на передачу фермы " + name + ".");
                                         Statement statement1 = connection.createStatement();
-                                        String SQLString = "DELETE FROM TransferFarmsTableTest WHERE receiverName = '" + receiverUUID + "', name = '" + name + "');";
+                                        String SQLString = "DELETE FROM TransferFarmsTableTest WHERE receiverName = '" + receiverUUID + "' AND `name`='" + name + "';";
                                         statement1.executeUpdate(SQLString);
                                     };
                                 }
