@@ -165,7 +165,7 @@ public class FarmsCommand implements CommandExecutor {
             }
         }
 
-        // /farms transfer <name> <player>
+        // /farms transfer <name> <player>.
         if (strings.length == 3) {
             if (strings[0].equals("transfer")) {
                 if (strings[1] != null) {
@@ -236,8 +236,9 @@ public class FarmsCommand implements CommandExecutor {
                             }
                         }
                     };
-                    player.sendMessage("Вам не приходило никаких запросов на передачу ферм!");
-                    return true;
+                    r.runTaskAsynchronously(JavaPlugin.getPlugin(SubTaxes.class));
+                    player.sendMessage("Вам не приходило никаких запросов на передачу ферм, если ничего кроме этой надписи не написано!");
+                    return false;
                 }
             }
 
@@ -263,7 +264,7 @@ public class FarmsCommand implements CommandExecutor {
                                         Player sender = Bukkit.getPlayer(senderUUID);
                                         assert sender != null;
                                         sender.sendMessage("Ваш запрос был отклонён.");
-                                        commandSender.sendMessage("Вы отклонили запросы на передачу фермы " + name + ".");
+                                        player.sendMessage("Вы отклонили запросы на передачу фермы " + name + ".");
                                         Statement statement1 = connection.createStatement();
                                         String SQLString = "DELETE FROM TransferFarmsTableTest WHERE receiverName = '" + receiverUUID + "', name = '" + name + "');";
                                         statement1.executeUpdate(SQLString);
@@ -275,7 +276,8 @@ public class FarmsCommand implements CommandExecutor {
                             }
                         }
                     };
-                    player.sendMessage("Вам не приходило никаких запросов на передачу ферм!");
+                    r.runTaskAsynchronously(JavaPlugin.getPlugin(SubTaxes.class));
+                    player.sendMessage("Вам не приходило никаких запросов на передачу ферм, если ничего кроме этой надписи не написано!");
                     return true;
                 }
             }
