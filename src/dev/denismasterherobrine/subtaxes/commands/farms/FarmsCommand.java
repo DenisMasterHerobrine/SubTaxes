@@ -285,6 +285,37 @@ public class FarmsCommand implements CommandExecutor {
                 }
             }
         }
+
+        // /farms list
+        if (strings.length == 1) {
+            if (strings[0].equals("list")) {
+                Player player = (Player) commandSender;
+                UUID targeterUUID = player.getUniqueId();
+                player.sendMessage("Список ваших ферм:");
+                BukkitRunnable r = new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            openConnection();
+                            Statement statement = connection.createStatement();
+                            ResultSet result = statement.executeQuery("SELECT * FROM FarmsListTable;");
+                            while (result.next()) {
+                                UUID ownerUUID = UUID.fromString(result.getString("ownerName"));
+                                String name = result.getString("name");
+                                if (ownerUUID.equals(targeterUUID)){
+                                    player.sendMessage("У вас во владнении имеется ферма с названием: " + name + ".");
+                                };
+                            }
+                            connection.close();
+                        } catch (ClassNotFoundException | SQLException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                };
+                r.runTaskAsynchronously(JavaPlugin.getPlugin(SubTaxes.class));
+                return false;
+            }
+        }
         return false;
     }
 
