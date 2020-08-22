@@ -2,11 +2,17 @@ package dev.denismasterherobrine.subtaxes.cycles;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 public class GetDate {
-    private static Date date = Calendar.getInstance().getTime();
+    private static Date date = Calendar.getInstance(Locale.ENGLISH).getTime();
+    private static int dayOfWeek = Calendar.DAY_OF_WEEK;
 
     public static Date getDate() {
-        return date; // Thu Mar 26 08:22:02 IST 2015 format
+        return date; // Wed Oct 31 11:44:02 CEST 2018 format
+    }
+
+    public static int getDayOfWeek() {
+        return dayOfWeek;
     }
 }

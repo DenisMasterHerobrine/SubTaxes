@@ -3,41 +3,32 @@ package dev.denismasterherobrine.subtaxes.cycles;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-
 public class FirstTimePlayerDateCheck {
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player pl = event.getPlayer();
         if (!pl.hasPlayedBefore()){
-            Date PlayerJoinDate = GetDate.getDate();
-            SimpleDateFormat formatter = new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss z");
-            String PlayerJoinDateString = formatter.format(PlayerJoinDate);
-            String[] PlayerJoinDateArrayListed = PlayerJoinDateString.split("\\s+");
-            System.out.println(PlayerJoinDate);
-            System.out.println(PlayerJoinDateString);
-            System.out.println(Arrays.toString(PlayerJoinDateArrayListed));
+            int executingDayOfWeek = GetDate.getDayOfWeek();
+            System.out.println(executingDayOfWeek);
             // Check for a day
-            if (PlayerJoinDateArrayListed[0].equals("Mon")){
+            if (executingDayOfWeek == 1){
                 boolean NO_TAXES = false;
             }
-            if (PlayerJoinDateArrayListed[0].equals("Tue")){
+            if (executingDayOfWeek == 2){
                 boolean NO_TAXES = false;
             }
-            if (PlayerJoinDateArrayListed[0].equals("Wed")){
+            if (executingDayOfWeek == 3){
                 boolean NO_TAXES = false;
             }
-            if (PlayerJoinDateArrayListed[0].equals("Thu")){
+            if (executingDayOfWeek == 4){
                 boolean NO_TAXES = true;
             }
-            if (PlayerJoinDateArrayListed[0].equals("Fri")){
+            if (executingDayOfWeek == 5){
                 boolean NO_TAXES = true;
             }
-            if (PlayerJoinDateArrayListed[0].equals("Sat")){
+            if (executingDayOfWeek == 6){
                 boolean NO_TAXES = true;
             }
-            if (PlayerJoinDateArrayListed[0].equals("Sun")){
+            if (executingDayOfWeek == 7){
                 boolean NO_TAXES = true;
             }
         }
