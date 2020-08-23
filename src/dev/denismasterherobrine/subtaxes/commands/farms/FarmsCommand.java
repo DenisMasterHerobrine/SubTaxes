@@ -34,7 +34,6 @@ public class FarmsCommand implements CommandExecutor {
                     if (strings[0].equals("remove")){
                         Player player = (Player) commandSender;
                         int executingDayOfWeek = GetDate.getDayOfWeek();
-                        System.out.println(executingDayOfWeek);
                         if(executingDayOfWeek != 7) {
                             player.sendMessage("Укажите ферму, которую хотите удалить! (Пример: /farms remove IronFarm)");
                             return true;
@@ -48,7 +47,6 @@ public class FarmsCommand implements CommandExecutor {
                         if (commandSender instanceof Player){
                             Player player = (Player) commandSender;
                             int executingDayOfWeek = GetDate.getDayOfWeek();
-                            System.out.println(executingDayOfWeek);
                             if(executingDayOfWeek != 7) {
                                 String world = player.getWorld().getName();
                                 Location loc = player.getLocation();
@@ -87,7 +85,6 @@ public class FarmsCommand implements CommandExecutor {
                         if (strings[1] != null){
                             Player player = ((Player) commandSender);
                             int executingDayOfWeek = GetDate.getDayOfWeek();
-                            System.out.println(executingDayOfWeek);
                             if(executingDayOfWeek != 7) {
                                 String world = player.getWorld().getName();
                                 Location loc = player.getLocation();
@@ -126,7 +123,6 @@ public class FarmsCommand implements CommandExecutor {
                         if (strings[1] != null){
                             Player player = ((Player) commandSender);
                             int executingDayOfWeek = GetDate.getDayOfWeek();
-                            System.out.println(executingDayOfWeek);
                             if(executingDayOfWeek != 7) {
                                 String world = player.getWorld().getName();
                                 Location loc = player.getLocation();
@@ -163,7 +159,6 @@ public class FarmsCommand implements CommandExecutor {
             if (strings[0].equals("transfer")){
                 Player player = (Player) commandSender;
                 int executingDayOfWeek = GetDate.getDayOfWeek();
-                System.out.println(executingDayOfWeek);
                 if(executingDayOfWeek != 7) {
                     player.sendMessage("Укажите ферму, которую хотите передать и ник игрока, которому передаётся она. (Пример: /farms transfer IronFarm Zakviel)");
                 }
@@ -178,7 +173,6 @@ public class FarmsCommand implements CommandExecutor {
                 if (strings[1] != null) {
                     Player player = (Player) commandSender;
                     int executingDayOfWeek = GetDate.getDayOfWeek();
-                    System.out.println(executingDayOfWeek);
                     if(executingDayOfWeek != 7) {
                         player.sendMessage("Укажите ник игрока, которому передаётся ферма. (Пример: /farms transfer IronFarm Zakviel)");
                     }
@@ -196,7 +190,6 @@ public class FarmsCommand implements CommandExecutor {
                         if (commandSender instanceof Player) {
                         Player sender = (Player) commandSender;
                             int executingDayOfWeek = GetDate.getDayOfWeek();
-                            System.out.println(executingDayOfWeek);
                             if(executingDayOfWeek != 7) {
                                 UUID target = Objects.requireNonNull(Bukkit.getOfflinePlayer(strings[2])).getUniqueId();
                                 if (Bukkit.getOfflinePlayer(target) != null && Bukkit.getOfflinePlayer(target).isOnline()) {
@@ -235,7 +228,6 @@ public class FarmsCommand implements CommandExecutor {
             if (strings[0].equals("decline")) {
                 Player player = (Player) commandSender;
                 int executingDayOfWeek = GetDate.getDayOfWeek();
-                System.out.println(executingDayOfWeek);
                 if(executingDayOfWeek != 7) {
                     UUID targeterUUID = player.getUniqueId();
                     BukkitRunnable r = new BukkitRunnable() {
@@ -280,7 +272,6 @@ public class FarmsCommand implements CommandExecutor {
                 if (strings[1] != null) {
                     Player player = (Player) commandSender;
                     int executingDayOfWeek = GetDate.getDayOfWeek();
-                    System.out.println(executingDayOfWeek);
                     if(executingDayOfWeek != 7) {
                         UUID targeterUUID = player.getUniqueId();
                         BukkitRunnable r = new BukkitRunnable() {
