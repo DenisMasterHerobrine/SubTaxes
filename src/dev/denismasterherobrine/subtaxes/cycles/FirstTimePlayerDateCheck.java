@@ -25,10 +25,10 @@ public class FirstTimePlayerDateCheck {
             if (executingDayOfWeek == 5){
                 boolean NO_TAXES = true;
             }
-            if (executingDayOfWeek == 1){
+            if (executingDayOfWeek == 6){
                 boolean NO_TAXES = true;
             }
-            if (executingDayOfWeek == 1){
+            if (executingDayOfWeek == 7){
                 boolean NO_TAXES = true;
             }
         }
