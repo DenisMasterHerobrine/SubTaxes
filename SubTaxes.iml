@@ -8,5 +8,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="spigot-api-1.16.2-R0.1-20200812.070416-7" level="project" />
+    <orderEntry type="library" name="bungeecord-chat-1.16-R0.3" level="project" />
   </component>
 </module>

@@ -1,7 +1,7 @@
 package dev.denismasterherobrine.subtaxes;
 
 import dev.denismasterherobrine.subtaxes.commands.farms.FarmsCommand;
-import dev.denismasterherobrine.subtaxes.commands.CustomCommandManager;
+import dev.denismasterherobrine.subtaxes.commands.CommandWhitelist;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -77,26 +77,26 @@ public class SubTaxes extends JavaPlugin implements Listener {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        return CustomCommandManager.onCommand(sender, command, label, args);
+        return CommandWhitelist.onCommand(sender, command, label, args);
     }
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-        return CustomCommandManager.onTabComplete(sender, command, alias, args);
+        return CommandWhitelist.onTabComplete(sender, command, alias, args);
     }
 
     @EventHandler
     public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
-        CustomCommandManager.onPlayerCommandPreprocess(event);
+        CommandWhitelist.onPlayerCommandPreprocess(event);
     }
 
     @EventHandler
     public void onPlayerCommandSend(PlayerCommandSendEvent event) {
-        CustomCommandManager.onPlayerCommandSend(event);
+        CommandWhitelist.onPlayerCommandSend(event);
     }
 
     @EventHandler
     public void onTabComplete(TabCompleteEvent event) {
-        CustomCommandManager.onTabComplete(event);
+        CommandWhitelist.onTabComplete(event);
     }
 }
