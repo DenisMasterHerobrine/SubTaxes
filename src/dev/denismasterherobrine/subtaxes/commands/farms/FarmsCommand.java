@@ -1,7 +1,6 @@
 package dev.denismasterherobrine.subtaxes.commands.farms;
 
 import dev.denismasterherobrine.subtaxes.SubTaxes;
-import dev.denismasterherobrine.subtaxes.utils.Pair;
 import dev.denismasterherobrine.subtaxes.utils.Triplet;
 import dev.denismasterherobrine.subtaxes.utils.Utils;
 import dev.denismasterherobrine.subtaxes.cycles.GetDate;
@@ -117,6 +116,7 @@ public class FarmsCommand implements CommandExecutor {
                                                 connection.close();
                                             } catch (ClassNotFoundException | SQLException e) {
                                                 e.printStackTrace();
+                                                player.sendMessage("§cПроизошла ошибка, попробуйте позже!");
                                             }
                                         }
                                     };
@@ -162,8 +162,9 @@ public class FarmsCommand implements CommandExecutor {
                                             connection.close();
                                             player.sendMessage("§6Ваша ферма успешно добавлена в список на рассмотрение!");
                                             printFarmList((Player) commandSender);
-                                        } catch (ClassNotFoundException | SQLException e) {
+                                        } catch (Exception e) {
                                             e.printStackTrace();
+                                            player.sendMessage("§cПроизошла ошибка, попробуйте позже!");
                                         }
                                     }
                                 };
@@ -238,6 +239,7 @@ public class FarmsCommand implements CommandExecutor {
                                                 connection.close();
                                             } catch (ClassNotFoundException | SQLException e) {
                                                 e.printStackTrace();
+                                                player.sendMessage("§cПроизошла ошибка, попробуйте позже!");
                                             }
                                         }
                                     };
@@ -281,6 +283,7 @@ public class FarmsCommand implements CommandExecutor {
                                             connection.close();
                                         } catch (ClassNotFoundException | SQLException e) {
                                             e.printStackTrace();
+                                            player.sendMessage("§cПроизошла ошибка, попробуйте позже!");
                                         }
                                     }
                                 };
@@ -324,6 +327,7 @@ public class FarmsCommand implements CommandExecutor {
                                                 connection.close();
                                             } catch (ClassNotFoundException | SQLException e) {
                                                 e.printStackTrace();
+                                                player.sendMessage("§cПроизошла ошибка, попробуйте позже!");
                                             }
                                         }
                                     };
@@ -421,6 +425,7 @@ public class FarmsCommand implements CommandExecutor {
                                                         connection.close();
                                                     } catch (ClassNotFoundException | SQLException e) {
                                                         e.printStackTrace();
+                                                        sender.sendMessage("§cПроизошла ошибка, попробуйте позже!");
                                                     }
                                                 }
                                             };
@@ -514,6 +519,7 @@ public class FarmsCommand implements CommandExecutor {
                                                     connection.close();
                                                 } catch (ClassNotFoundException | SQLException e) {
                                                     e.printStackTrace();
+                                                    player.sendMessage("§cПроизошла ошибка, попробуйте позже!");
                                                 }
                                             }
                                         };
@@ -660,6 +666,7 @@ public class FarmsCommand implements CommandExecutor {
                     player.spigot().sendMessage(message);
                 } catch (ClassNotFoundException | SQLException e) {
                     e.printStackTrace();
+                    player.sendMessage("§cПроизошла ошибка, попробуйте позже!");
                 }
             }
         };

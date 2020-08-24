@@ -7,5 +7,6 @@ api-version: 1.16
 commands:
   adm:
   farms:
-    description: Prints list
   tax:
+  m:
+  help:

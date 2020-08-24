@@ -13,25 +13,21 @@ public class Utils {
             result += String.valueOf(list.charAt((int) Math.round(Math.random() * (list.length() - 1))));
         return result;
     }
-    public static String getUinqueId(int length){
-        try {
-            openConnection();
+    public static String getUinqueId(int length) throws Exception{
+        if(connection == null || connection.isClosed()) openConnection();
+        synchronized (connection) {
             Statement statement = connection.createStatement();
             String result = "";
-            while(true) {
+            while (true) {
                 result = getId(length);
                 ResultSet r = statement.executeQuery("SELECT * FROM farms;");
                 while (r.next()) {
-                    if(r.getString("ID").equals(result)) continue;
+                    if (r.getString("ID").equals(result)) continue;
                 }
                 break;
             }
             connection.close();
             return result;
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            return null;
         }
     }
 

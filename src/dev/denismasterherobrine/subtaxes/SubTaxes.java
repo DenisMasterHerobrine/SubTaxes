@@ -75,16 +75,6 @@ public class SubTaxes extends JavaPlugin implements Listener {
         return PlayerHPRemove;
     }
 
-    @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        return CommandWhitelist.onCommand(sender, command, label, args);
-    }
-
-    @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-        return CommandWhitelist.onTabComplete(sender, command, alias, args);
-    }
-
     @EventHandler
     public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
         CommandWhitelist.onPlayerCommandPreprocess(event);
